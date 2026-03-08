@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SP SOCIAL GROWTH | Premium SMM Store</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #4facfe;
+            --secondary: #00f2fe;
+            --accent: #f093fb;
+            --bg-light: #fdfdff;
+            --text-main: #2d3436;
+            --glass: rgba(255, 255, 255, 0.6);
+        }
+
+        /* --- CUSTOM MULTI-COLOR SCROLLBAR --- */
+        ::-webkit-scrollbar {
+            width: 12px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            /* Gradient Scrollbar */
+            background: linear-gradient(180deg, #4facfe, #00f2fe, #f093fb, #4facfe);
+            background-size: 100% 400%;
+            border-radius: 10px;
+            border: 3px solid #f1f1f1;
+            animation: scrollGradient 5s linear infinite;
+        }
+
+        @keyframes scrollGradient {
+            0% { background-position: 0% 0%; }
+            100% { background-position: 0% 100%; }
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(180deg, #f093fb, #4facfe);
+        }
+
+        /* --- BASIC STYLES --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: #f0f2f5;
+            color: var(--text-main);
+            overflow-x: hidden;
+            min-height: 200vh; /* Scrollbar එක පේන්න උස වැඩි කළා */
+        }
+
+        /* HDR Background Glow */
+        .bg-glow {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1;
+            background: radial-gradient(circle at 10% 20%, rgba(79, 172, 254, 0.15) 0%, transparent 40%),
+                        radial-gradient(circle at 90% 80%, rgba(240, 147, 251, 0.15) 0%, transparent 40%);
+        }
+
+        /* --- PRE-LOADER --- */
+        #loader {
+            position: fixed;
+            inset: 0;
+            background: #ffffff;
+            z-index: 10000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: 1s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .loader-box {
+            width: 60px; height: 60px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid var(--primary);
+            border-radius: 12px;
+            animation: bounceSpin 1.5s infinite ease-in-out;
+        }
+        @keyframes bounceSpin {
+            0% { transform: scale(1) rotate(0deg); }
+            50% { transform: scale(1.2) rotate(180deg); }
+            100% { transform: scale(1) rotate(360deg); }
+        }
+
+        /* Header */
+        header {
+            padding: 20px 10%;
+            display: flex; justify-content: space-between; align-items: center;
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            position: sticky; top: 0; z-index: 999;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+        }
+        .logo {
+            font-size: 1.5rem; font-weight: 800;
+            background: linear-gradient(45deg, var(--primary), var(--accent));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+
+        /* Hero */
+        .hero {
+            text-align: center;
+            padding: 100px 20px;
+            opacity: 0; transform: translateY(30px);
+            transition: 1.5s all ease;
+        }
+        .hero.active { opacity: 1; transform: translateY(0); }
+        .hero h1 { font-size: clamp(2.2rem, 5vw, 3.5rem); color: #1e3799; line-height: 1.2; }
+        .hero p { color: #636e72; margin-top: 15px; font-weight: 300; }
+
+        /* Container & Cards */
+        .container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            padding: 20px 10% 80px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        .card {
+            background: var(--glass);
+            backdrop-filter: blur(25px);
+            border-radius: 35px;
+            padding: 40px 30px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.7);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.03);
+            transition: 0.5s cubic-bezier(0.2, 1, 0.3, 1);
+            position: relative;
+            overflow: hidden;
+            opacity: 0; transform: translateY(50px);
+        }
+        .card.reveal { opacity: 1; transform: translateY(0); }
+        .card:hover {
+            transform: translateY(-15px);
+            background: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 40px 80px rgba(79, 172, 254, 0.15);
+            border-color: var(--primary);
+        }
+
+        .icon { font-size: 4rem; display: block; margin-bottom: 20px; transition: 0.5s; }
+        .card:hover .icon { transform: scale(1.2) rotate(10deg); filter: drop-shadow(0 0 15px var(--primary)); }
+
+        .price { font-size: 1.8rem; font-weight: 700; color: #0984e3; margin: 20px 0; display: block; }
+
+        .btn {
+            display: inline-block;
+            padding: 14px 40px;
+            background: linear-gradient(45deg, var(--primary), var(--accent));
+            color: white; text-decoration: none;
+            border-radius: 100px; font-weight: 600;
+            transition: 0.4s;
+            box-shadow: 0 10px 25px rgba(79, 172, 254, 0.3);
+        }
+        .btn:hover { transform: scale(1.05); letter-spacing: 1px; }
+
+        .badge {
+            position: absolute; top: 20px; right: -35px;
+            background: #ff7675; color: white;
+            padding: 5px 45px; font-size: 0.75rem;
+            transform: rotate(45deg); font-weight: 800;
+        }
+
+        footer { text-align: center; padding: 80px 20px; background: rgba(255, 255, 255, 0.5); }
+    </style>
+</head>
+<body>
+
+    <div class="bg-glow"></div>
+
+    <div id="loader">
+        <div class="loader-box"></div>
+        <div style="margin-top: 25px; letter-spacing: 5px; font-weight: 700; color: var(--primary);">LOADING...</div>
+    </div>
+
+    <header>
+        <div class="logo">SP SOCIAL GROWTH</div>
+        <a href="https://wa.me/94755409310" class="btn" style="padding: 10px 25px; font-size: 0.85rem;">WHATSAPP</a>
+    </header>
+
+    <section class="hero" id="hero">
+        <h1>Transform Your Online<br>Presence Today</h1>
+        <p>Expert SMM Services by Sirimath & Pavan</p>
+    </section>
+
+    <div class="container">
+        <div class="card">
+            <span class="icon">📈</span>
+            <h3>WhatsApp Follow</h3>
+            <span class="price">Rs. 750 <small style="font-size: 0.8rem; font-weight: 400; opacity: 0.6;">Upwards</small></span>
+            <a href="https://wa.me/94755409310" class="btn">Order Now</a>
+        </div>
+
+        <div class="card">
+            <span class="icon">😻</span>
+            <h3>WhatsApp React</h3>
+            <span class="price">Rs. 250 <small style="font-size: 0.8rem; font-weight: 400; opacity: 0.6;">Upwards</small></span>
+            <a href="https://wa.me/94755409310" class="btn">Order Now</a>
+        </div>
+
+        <div class="card" style="border: 2px solid var(--primary);">
+            <div class="badge">HOT</div>
+            <span class="icon">⚡</span>
+            <h3>TikTok Unlimited Panel</h3>
+            <span class="price">Rs. 2000</span>
+            <a href="https://wa.me/94755409310" class="btn">Get Access</a>
+        </div>
+
+        <div class="card">
+            <span class="icon">💲</span>
+            <h3>TikTok Likes</h3>
+            <span class="price" style="font-size: 1.4rem; padding: 10px 0;">CONTACT US</span>
+            <a href="https://wa.me/94755409310" class="btn">Inquire Now</a>
+        </div>
+
+        <div class="card">
+            <span class="icon">👀</span>
+            <h3>TikTok Views</h3>
+            <span class="price" style="font-size: 1.4rem; padding: 10px 0;">CONTACT US</span>
+            <a href="https://wa.me/94755409310" class="btn">Inquire Now</a>
+        </div>
+    </div>
+
+    <footer>
+        <p style="font-weight: 700; color: #2d3436; font-size: 1.2rem;">SP SOCIAL GROWTH</p>
+        <p style="color: #636e72; font-size: 0.9rem; margin-top: 10px;">© 2026 Powered by Sirimath. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        window.addEventListener("load", () => {
+            const loader = document.getElementById("loader");
+            const hero = document.getElementById("hero");
+            setTimeout(() => {
+                loader.style.opacity = "0";
+                loader.style.visibility = "hidden";
+                hero.classList.add("active");
+                revealCards();
+            }, 1200);
+        });
+
+        function revealCards() {
+            const cards = document.querySelectorAll('.card');
+            cards.forEach((card, index) => {
+                setTimeout(() => {
+                    card.classList.add('reveal');
+                }, index * 200);
+            });
+        }
+    </script>
+</body>
+</html>
